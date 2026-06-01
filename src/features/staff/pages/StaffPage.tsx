@@ -1,13 +1,24 @@
+import { useState } from 'react'
 import { PageHeader } from '../../../shared/components/ui/PageHeader'
 import { StaffForm } from '../components/StaffForm'
 import { StaffTable } from '../components/StaffTable'
 import { useStaffManagement } from '../hooks/useStaffManagement'
+import { ConfirmDialog } from '../../../shared/components/ui/ConfirmDialog'
+import type { StaffUser } from '../../reports/types/report'
 
 export function StaffPage() {
   const staffManagement = useStaffManagement()
+  const [pendingToggleUser, setPendingToggleUser] = useState<StaffUser | null>(null)
 
   if (staffManagement.isLoading) {
     return <div className="text-sm text-slate-500 dark:text-zinc-400">Cargando accesos...</div>
+  }
+
+  function handleConfirmToggle() {
+    if (pendingToggleUser) {
+      staffManagement.toggleStaffStatus(pendingToggleUser)
+      setPendingToggleUser(null)
+    }
   }
 
   return (
@@ -30,8 +41,23 @@ export function StaffPage() {
       <StaffTable
         staff={staffManagement.staff}
         onEdit={staffManagement.editStaff}
-        onToggleStatus={staffManagement.toggleStaffStatus}
+        onToggleStatus={(user) => setPendingToggleUser(user)}
+      />
+
+      <ConfirmDialog
+        open={Boolean(pendingToggleUser)}
+        title={pendingToggleUser?.is_active ? 'Desactivar funcionario' : 'Activar funcionario'}
+        message={`¿Estás seguro de que deseas ${
+          pendingToggleUser?.is_active ? 'desactivar' : 'activar'
+        } el acceso de ${pendingToggleUser?.full_name}? ${
+          pendingToggleUser?.is_active ? 'Este usuario ya no podrá iniciar sesión en la plataforma.' : 'El usuario recuperará el acceso inmediato a la plataforma.'
+        }`}
+        variant={pendingToggleUser?.is_active ? 'danger' : 'primary'}
+        confirmLabel={pendingToggleUser?.is_active ? 'Desactivar' : 'Activar'}
+        onConfirm={handleConfirmToggle}
+        onClose={() => setPendingToggleUser(null)}
       />
     </div>
   )
 }
+

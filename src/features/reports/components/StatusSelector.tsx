@@ -26,6 +26,7 @@ export function StatusSelector({
     <div className="space-y-3">
       <SelectInput
         label="Nuevo estado"
+        tooltip="Elige el estado correspondiente para el reporte. Si es RECHAZADO, deberás justificarlo en el comentario."
         value={value}
         onChange={(event) => onStatusChange(event.target.value as ReportStatus)}
       >
@@ -35,6 +36,7 @@ export function StatusSelector({
       </SelectInput>
       <TextareaInput
         label="Comentario interno"
+        tooltip="Obligatorio si rechazas el reporte. Se guardará en el historial y se enviará al ciudadano como justificación."
         value={comment}
         onChange={(event) => onCommentChange(event.target.value)}
         placeholder="Comentario de seguimiento"
@@ -46,3 +48,4 @@ export function StatusSelector({
     </div>
   )
 }
+

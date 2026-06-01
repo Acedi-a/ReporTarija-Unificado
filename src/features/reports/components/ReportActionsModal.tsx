@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Sparkles, X } from 'lucide-react'
 import { Button } from '../../../shared/components/ui/Button'
 import type { ReportAiAnalysis } from '../ai/types/reportAi'
@@ -43,9 +44,21 @@ export function ReportActionsModal({
   isAnalyzing,
   onAnalyze,
 }: ReportActionsModalProps) {
+  useEffect(() => {
+    if (!open) return
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [open, onClose])
+
   if (!open) {
     return null
   }
+
 
   return (
     <div className="fixed inset-0 z-50 grid place-items-center bg-slate-950/45 px-4 py-6 backdrop-blur-sm" role="dialog" aria-modal="true">

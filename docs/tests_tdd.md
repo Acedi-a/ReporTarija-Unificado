@@ -4,13 +4,6 @@ Se aplico la metodologia **TDD (Test Driven Development)** sobre reglas de negoc
 
 Como el proyecto ya contaba con una base funcional previa y una fase de refactorizacion, TDD se uso para consolidar funcionalidades criticas, documentar el comportamiento esperado y reducir el riesgo de regresiones futuras.
 
-La forma resumida de describir el trabajo es:
-
-```txt
-Se aplico TDD mediante 7 pruebas automatizadas con Vitest,
-agrupadas en 5 funcionalidades criticas del portal ReportaTarija.
-```
-
 ## Ciclo Red, Green y Refactor aplicado
 
 ### Fase Red
@@ -62,15 +55,17 @@ Los 7 tests pertenecen a 5 funcionalidades criticas:
 5. Reglas de vencimiento de reportes
 ```
 
-| # | Test | Archivo | Que verifica |
-|---|---|---|---|
-| 1 | Acepta credenciales validas en login | `loginDto.test.ts` | Valida que un correo correcto y una contrasena suficiente pasen el esquema de login. |
-| 2 | Rechaza credenciales invalidas en login | `loginDto.test.ts` | Verifica que un email invalido y una contrasena corta sean rechazados. |
-| 3 | Exige comentario al rechazar un reporte | `reportActionDtos.test.ts` | Comprueba que un reporte no pueda pasar a `RECHAZADO` sin comentario. |
-| 4 | Exige responsable o area al asignar un reporte | `reportActionDtos.test.ts` | Comprueba que una asignacion sin funcionario ni area municipal sea invalida. |
-| 5 | Cuenta reportes por estado para el dashboard | `reportBusinessRules.test.ts` | Verifica que las metricas del dashboard calculen correctamente reportes por estado. |
-| 6 | Marca como vencido un reporte pendiente con 15 dias o mas | `reportBusinessRules.test.ts` | Comprueba que un reporte abierto por 15 dias sea considerado vencido. |
-| 7 | No marca como vencido un reporte resuelto aunque tenga 15 dias o mas | `reportBusinessRules.test.ts` | Verifica que reportes cerrados no aparezcan como vencidos. |
+
+| #   | Test                                                                 | Archivo                       | Que verifica                                                                         |
+| --- | -------------------------------------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------ |
+| 1   | Acepta credenciales validas en login                                 | `loginDto.test.ts`            | Valida que un correo correcto y una contrasena suficiente pasen el esquema de login. |
+| 2   | Rechaza credenciales invalidas en login                              | `loginDto.test.ts`            | Verifica que un email invalido y una contrasena corta sean rechazados.               |
+| 3   | Exige comentario al rechazar un reporte                              | `reportActionDtos.test.ts`    | Comprueba que un reporte no pueda pasar a `RECHAZADO` sin comentario.                |
+| 4   | Exige responsable o area al asignar un reporte                       | `reportActionDtos.test.ts`    | Comprueba que una asignacion sin funcionario ni area municipal sea invalida.         |
+| 5   | Cuenta reportes por estado para el dashboard                         | `reportBusinessRules.test.ts` | Verifica que las metricas del dashboard calculen correctamente reportes por estado.  |
+| 6   | Marca como vencido un reporte pendiente con 15 dias o mas            | `reportBusinessRules.test.ts` | Comprueba que un reporte abierto por 15 dias sea considerado vencido.                |
+| 7   | No marca como vencido un reporte resuelto aunque tenga 15 dias o mas | `reportBusinessRules.test.ts` | Verifica que reportes cerrados no aparezcan como vencidos.                           |
+
 
 ## Resultado de ejecucion
 

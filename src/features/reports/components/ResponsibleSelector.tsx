@@ -27,6 +27,7 @@ export function ResponsibleSelector({
     <div className="grid gap-3">
       <SelectInput
         label="Área municipal"
+        tooltip="El departamento del municipio encargado de resolver esta categoría de reporte (ej. Obras Públicas)."
         value={areaId}
         onChange={(event) => onAreaChange(event.target.value)}
       >
@@ -35,6 +36,7 @@ export function ResponsibleSelector({
       </SelectInput>
       <SelectInput
         label="Responsable"
+        tooltip="El funcionario o técnico individual encargado de realizar o supervisar los trabajos de solución."
         value={userId}
         onChange={(event) => onUserChange(event.target.value)}
       >
@@ -47,3 +49,4 @@ export function ResponsibleSelector({
     </div>
   )
 }
+

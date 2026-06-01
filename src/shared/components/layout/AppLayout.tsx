@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { Bell, ClipboardList, FileText, LayoutDashboard, LogOut, Moon, Sun, Users } from 'lucide-react'
+import { Bell, ClipboardList, FileText, LayoutDashboard, LogOut, Moon, Sun, Users, HelpCircle } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { useTheme } from '../../../app/theme'
 import { logout } from '../../../features/auth/services/authService'
@@ -11,7 +11,9 @@ const navItems = [
   { to: '/reports', label: 'Reportes', icon: ClipboardList },
   { to: '/staff', label: 'Accesos', icon: Users },
   { to: '/notifications', label: 'Notificaciones', icon: Bell },
+  { to: '/help', label: 'Ayuda', icon: HelpCircle },
 ]
+
 
 export function AppLayout() {
   const navigate = useNavigate()

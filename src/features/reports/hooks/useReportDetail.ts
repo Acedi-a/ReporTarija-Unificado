@@ -6,9 +6,11 @@ import { getEvidencesByReportId, uploadEvidence } from '../services/evidenceServ
 import { assignResponsible, getReportById, updateReportStatus } from '../services/reportService'
 import { validateAssignment, validateStatusChange } from '../utils/reportActions'
 import type { ReportStatus } from '../types/report'
+import { useToast } from '../../../shared/components/ui/Toaster'
 
 export function useReportDetail(reportId: string) {
   const queryClient = useQueryClient()
+  const toast = useToast()
   const [newStatus, setNewStatus] = useState<ReportStatus>('EN_REVISION')
   const [comment, setComment] = useState('')
   const [userId, setUserId] = useState('')
@@ -55,7 +57,10 @@ export function useReportDetail(reportId: string) {
         resolvedAt: reportQuery.data.resolved_at,
       })
     },
-    onSuccess: refreshReportDetail,
+    onSuccess: async () => {
+      await refreshReportDetail()
+      toast.success('El estado del reporte ha sido actualizado correctamente.')
+    },
   })
 
   const assignmentMutation = useMutation({
@@ -69,13 +74,20 @@ export function useReportDetail(reportId: string) {
         areaId,
       })
     },
-    onSuccess: refreshReportDetail,
+    onSuccess: async () => {
+      await refreshReportDetail()
+      toast.success('Responsable asignado correctamente.')
+    },
   })
 
   const evidenceMutation = useMutation({
     mutationFn: (file: File) => uploadEvidence({ reportId, file }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['evidences', reportId] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['evidences', reportId] })
+      toast.success('Evidencia fotográfica subida correctamente.')
+    },
   })
+
 
   function changeStatus(status: ReportStatus) {
     setNewStatus(status)

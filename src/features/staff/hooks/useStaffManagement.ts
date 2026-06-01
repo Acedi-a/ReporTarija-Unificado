@@ -10,6 +10,7 @@ import {
   type StaffPayload,
 } from '../services/staffService'
 import { createStaffSchema, updateStaffSchema, type StaffFormValue } from '../validations/staffSchema'
+import { useToast } from '../../../shared/components/ui/Toaster'
 
 const emptyStaffForm: StaffFormValue = {
   full_name: '',
@@ -22,6 +23,7 @@ const emptyStaffForm: StaffFormValue = {
 
 export function useStaffManagement() {
   const queryClient = useQueryClient()
+  const toast = useToast()
   const [form, setForm] = useState<StaffFormValue>(emptyStaffForm)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [error, setError] = useState('')
@@ -29,12 +31,27 @@ export function useStaffManagement() {
   const areasQuery = useQuery({ queryKey: ['areas'], queryFn: getAreas })
 
   const refreshStaff = () => queryClient.invalidateQueries({ queryKey: ['staff'] })
-  const createMutation = useMutation({ mutationFn: createStaffAccess, onSuccess: refreshStaff })
+  const createMutation = useMutation({
+    mutationFn: createStaffAccess,
+    onSuccess: () => {
+      refreshStaff()
+      toast.success('Acceso de funcionario creado con éxito.')
+    },
+  })
   const updateMutation = useMutation({
     mutationFn: (input: { id: string; payload: StaffPayload }) => updateStaff(input.id, input.payload),
-    onSuccess: refreshStaff,
+    onSuccess: () => {
+      refreshStaff()
+      toast.success('Acceso de funcionario actualizado con éxito.')
+    },
   })
-  const toggleMutation = useMutation({ mutationFn: toggleStaffStatus, onSuccess: refreshStaff })
+  const toggleMutation = useMutation({
+    mutationFn: toggleStaffStatus,
+    onSuccess: (data) => {
+      refreshStaff()
+      toast.success(`Funcionario ${data.full_name} ${data.is_active ? 'activado' : 'desactivado'} con éxito.`)
+    },
+  })
 
   function updateForm(value: StaffFormValue) {
     setForm(value)

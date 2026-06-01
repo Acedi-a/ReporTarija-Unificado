@@ -7,6 +7,7 @@ import { ReportsPage } from '../features/reports/pages/ReportsPage'
 import { ReportDetailPage } from '../features/reports/pages/ReportDetailPage'
 import { StaffPage } from '../features/staff/pages/StaffPage'
 import { NotificationsPage } from '../features/notifications/pages/NotificationsPage'
+import { HelpPage } from '../shared/pages/HelpPage'
 import { NotFoundPage } from '../shared/pages/NotFoundPage'
 
 export const router = createBrowserRouter([
@@ -24,6 +25,7 @@ export const router = createBrowserRouter([
           { path: 'reports/:id', element: <ReportDetailPage /> },
           { path: 'staff', element: <StaffPage /> },
           { path: 'notifications', element: <NotificationsPage /> },
+          { path: 'help', element: <HelpPage /> },
           { path: '*', element: <NotFoundPage /> },
         ],
       },
