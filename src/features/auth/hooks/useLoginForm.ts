@@ -2,11 +2,10 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 import { login } from '../services/authService'
-import { startDemoSession } from '../services/authSession'
 import { loginSchema, type LoginFormValues } from '../validations/loginSchema'
 
 const defaultLoginValues: LoginFormValues = {
-  email: 'admin@reportatarija.bo',
+  email: '',
   password: '',
 }
 
@@ -18,7 +17,7 @@ export function useLoginForm() {
     mutationFn: login,
     onSuccess: () => navigate('/dashboard'),
     onError: () => {
-      setError('No se pudo iniciar sesión. Para el prototipo puedes entrar al panel con el acceso demo.')
+      setError('Credenciales incorrectas o problemas al conectar con el servidor.')
     },
   })
 
@@ -39,17 +38,11 @@ export function useLoginForm() {
     loginMutation.mutate(parsed.data)
   }
 
-  function enterDemo() {
-    startDemoSession()
-    navigate('/dashboard')
-  }
-
   return {
     values,
     error,
     isSubmitting: loginMutation.isPending,
     updateField,
     submit,
-    enterDemo,
   }
 }

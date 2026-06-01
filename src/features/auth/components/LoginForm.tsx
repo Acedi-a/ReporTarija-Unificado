@@ -9,7 +9,6 @@ type LoginFormProps = {
   isSubmitting: boolean
   onFieldChange: (name: keyof LoginFormValues, value: string) => void
   onSubmit: () => void
-  onEnterDemo: () => void
 }
 
 export function LoginForm({
@@ -18,7 +17,6 @@ export function LoginForm({
   isSubmitting,
   onFieldChange,
   onSubmit,
-  onEnterDemo,
 }: LoginFormProps) {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -37,9 +35,6 @@ export function LoginForm({
       {error && <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
       <Button type="submit" disabled={isSubmitting} className="w-full">
         {isSubmitting ? 'Validando...' : 'Iniciar sesión'}
-      </Button>
-      <Button variant="secondary" onClick={onEnterDemo} className="w-full">
-        Entrar al prototipo demo
       </Button>
     </form>
   )

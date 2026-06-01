@@ -21,7 +21,6 @@ export function LoginPage() {
             isSubmitting={loginForm.isSubmitting}
             onFieldChange={loginForm.updateField}
             onSubmit={loginForm.submit}
-            onEnterDemo={loginForm.enterDemo}
           />
         </Panel>
       </div>
