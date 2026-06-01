@@ -1,7 +1,8 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { Bell, ClipboardList, FileText, LayoutDashboard, LogOut, Moon, Sun, Users, HelpCircle } from 'lucide-react'
+import { Bell, ClipboardList, LayoutDashboard, LogOut, Moon, Sun, Users, HelpCircle } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { useTheme } from '../../../app/theme'
+import { Logo } from '../ui/Logo'
 import { logout } from '../../../features/auth/services/authService'
 import { clearDemoSession } from '../../../features/auth/services/authSession'
 import { getUnreadNotificationsCount } from '../../../features/notifications/services/notificationService'
@@ -34,8 +35,8 @@ export function AppLayout() {
       <aside className="fixed inset-y-0 left-0 z-20 hidden w-64 border-r border-slate-200 bg-white dark:border-zinc-800 dark:bg-zinc-950 lg:flex lg:flex-col">
         <div className="border-b border-slate-200 px-5 py-5 dark:border-zinc-800">
           <div className="flex items-center gap-3">
-            <div className="grid h-10 w-10 place-items-center rounded-lg bg-blue-700 text-white dark:bg-zinc-100 dark:text-zinc-950">
-              <FileText className="h-5 w-5" />
+            <div className="h-14 w-14 flex items-center justify-center">
+              <Logo showText={false} className="h-14 w-14" />
             </div>
             <div>
               <p className="font-semibold">Panel ReportaTarija</p>
