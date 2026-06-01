@@ -58,7 +58,7 @@ function SummaryChart({ title, data, xKey }: { title: string; data: ChartRow[]; 
     <Panel>
       <h2 className="font-semibold text-slate-950 dark:text-zinc-50">{title}</h2>
       <div className="mt-4 h-72">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" minWidth={0}>
           <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis dataKey={xKey} tick={{ fontSize: 11 }} />

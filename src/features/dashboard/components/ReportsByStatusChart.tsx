@@ -16,7 +16,7 @@ export function ReportsByStatusChart({ data }: ReportsByStatusChartProps) {
     <Panel>
       <h2 className="font-semibold text-slate-950 dark:text-zinc-50">Reportes por estado</h2>
       <div className="mt-4 h-72">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" minWidth={0}>
           <PieChart>
             <Pie data={data} dataKey="value" nameKey="name" innerRadius={58} outerRadius={95} paddingAngle={2}>
               {data.map((entry, index) => (
