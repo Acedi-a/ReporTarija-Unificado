@@ -4,11 +4,12 @@ import { getUserRank } from '@/src/shared/constants/reputation';
 import { BorderRadius, Colors, FontSize, FontWeight, Shadows, Spacing } from '@/src/shared/constants/theme';
 import { useAuth } from '@/src/shared/hooks/useAuth';
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function ProfileScreen() {
   const { user, isDemo, logout } = useAuth();
+  const [showHelp, setShowHelp] = useState(false);
 
   const points = user?.reputation_points || 0;
   const rank = getUserRank(points);
@@ -63,6 +64,57 @@ export default function ProfileScreen() {
           </View>
         </View>
       </View>
+
+      <TouchableOpacity
+        style={styles.helpHeaderCard}
+        onPress={() => setShowHelp(!showHelp)}
+        activeOpacity={0.8}
+      >
+        <View style={styles.helpHeaderContainer}>
+          <Ionicons name="help-circle-outline" size={22} color={Colors.primary} />
+          <Text style={styles.helpHeaderTitle}>Centro de Ayuda Ciudadana</Text>
+        </View>
+        <Ionicons
+          name={showHelp ? 'chevron-up' : 'chevron-down'}
+          size={20}
+          color={Colors.textSecondary}
+        />
+      </TouchableOpacity>
+
+      {showHelp && (
+        <View style={styles.helpContentCard}>
+          <Text style={styles.helpSubtitle}>Preguntas Frecuentes</Text>
+
+          <View style={styles.faqItem}>
+            <Text style={styles.faqQuestion}>¿Qué significan los estados del reporte?</Text>
+            <Text style={styles.faqAnswer}>
+              • <Text style={{ fontWeight: 'bold' }}>Pendiente:</Text> Recibido y esperando revisión.{'\n'}
+              • <Text style={{ fontWeight: 'bold' }}>En revisión:</Text> Siendo analizado por personal municipal.{'\n'}
+              • <Text style={{ fontWeight: 'bold' }}>En proceso / Asignado:</Text> Derivado a personal técnico para su solución.{'\n'}
+              • <Text style={{ fontWeight: 'bold' }}>Resuelto:</Text> La anomalía ha sido solucionada.{'\n'}
+              • <Text style={{ fontWeight: 'bold' }}>Rechazado:</Text> Fuera de competencia o duplicado.
+            </Text>
+          </View>
+
+          <View style={styles.faqDivider} />
+
+          <View style={styles.faqItem}>
+            <Text style={styles.faqQuestion}>¿Cómo hacer un buen reporte?</Text>
+            <Text style={styles.faqAnswer}>
+              Usa el GPS del celular estando en el sitio del problema, toma una foto clara de día y añade una descripción precisa de al menos 20 caracteres.
+            </Text>
+          </View>
+
+          <View style={styles.faqDivider} />
+
+          <View style={styles.faqItem}>
+            <Text style={styles.faqQuestion}>¿Cómo subo de rango?</Text>
+            <Text style={styles.faqAnswer}>
+              Cada reporte verídico enviado aumenta tus puntos de reputación y te otorga medallas de ciudadano distinguido en tu perfil.
+            </Text>
+          </View>
+        </View>
+      )}
 
       <Button
         title="Cerrar sesión"
@@ -178,5 +230,62 @@ const styles = StyleSheet.create({
   },
   logoutButton: {
     marginTop: Spacing.sm,
+    marginBottom: Spacing.xl,
+  },
+  helpHeaderCard: {
+    backgroundColor: Colors.surface,
+    borderRadius: BorderRadius.xl,
+    padding: Spacing.lg,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: Spacing.md,
+    ...Shadows.sm,
+    borderWidth: 1,
+    borderColor: Colors.borderLight,
+  },
+  helpHeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+  },
+  helpHeaderTitle: {
+    fontSize: FontSize.md,
+    fontWeight: FontWeight.semibold,
+    color: Colors.textPrimary,
+  },
+  helpContentCard: {
+    backgroundColor: Colors.surface,
+    borderRadius: BorderRadius.xl,
+    padding: Spacing.xl,
+    marginBottom: Spacing.md,
+    ...Shadows.sm,
+    borderWidth: 1,
+    borderColor: Colors.borderLight,
+  },
+  helpSubtitle: {
+    fontSize: FontSize.md,
+    fontWeight: FontWeight.bold,
+    color: Colors.primary,
+    marginBottom: Spacing.md,
+  },
+  faqItem: {
+    marginVertical: Spacing.xs,
+  },
+  faqQuestion: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.semibold,
+    color: Colors.textPrimary,
+    marginBottom: 4,
+  },
+  faqAnswer: {
+    fontSize: FontSize.xs + 1,
+    color: Colors.textSecondary,
+    lineHeight: 18,
+  },
+  faqDivider: {
+    height: 1,
+    backgroundColor: Colors.borderLight,
+    marginVertical: Spacing.md,
   },
 });

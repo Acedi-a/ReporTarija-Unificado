@@ -148,5 +148,6 @@ export function useCreateReportForm() {
     watchAddress,
     watchNeighborhood,
     handleLocationChange,
+    resetFormAndNavigate,
   };
 }

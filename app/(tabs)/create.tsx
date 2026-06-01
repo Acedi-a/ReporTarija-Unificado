@@ -25,6 +25,7 @@ export default function CreateReportScreen() {
     watchAddress,
     watchNeighborhood,
     handleLocationChange,
+    resetFormAndNavigate,
   } = useCreateReportForm();
 
   return (
@@ -81,6 +82,14 @@ export default function CreateReportScreen() {
           disabled={isFormInvalid}
           style={styles.submitButton}
         />
+
+        <Button
+          title="Cancelar"
+          onPress={resetFormAndNavigate}
+          variant="outline"
+          disabled={submitting}
+          style={styles.cancelButton}
+        />
       </View>
     </ScreenContainer>
   );
@@ -104,5 +113,8 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     marginTop: Spacing.md,
+  },
+  cancelButton: {
+    marginBottom: Spacing.xl,
   },
 });
