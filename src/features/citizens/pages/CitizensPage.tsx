@@ -1,13 +1,13 @@
+import { Award, ClipboardList, Search, ShieldCheck, Users } from 'lucide-react'
 import { useState } from 'react'
+import { ConfirmDialog } from '../../../shared/components/ui/ConfirmDialog'
+import { SelectInput } from '../../../shared/components/ui/FormControls'
 import { PageHeader } from '../../../shared/components/ui/PageHeader'
 import { StatCard } from '../../../shared/components/ui/StatCard'
-import { SelectInput } from '../../../shared/components/ui/FormControls'
-import { useCitizenManagement } from '../hooks/useCitizenManagement'
-import { CitizenTable } from '../components/CitizenTable'
 import { CitizenDetailModal } from '../components/CitizenDetailModal'
-import { ConfirmDialog } from '../../../shared/components/ui/ConfirmDialog'
+import { CitizenTable } from '../components/CitizenTable'
+import { useCitizenManagement } from '../hooks/useCitizenManagement'
 import type { CitizenUser } from '../types/citizen'
-import { Users, Award, ShieldCheck, ClipboardList, Search } from 'lucide-react'
 
 export function CitizensPage() {
   const [pendingToggleUser, setPendingToggleUser] = useState<CitizenUser | null>(null)
@@ -36,7 +36,6 @@ export function CitizensPage() {
     )
   }
 
-  // Calculate metrics
   const totalCitizens = citizens.length
   const activeCitizens = citizens.filter((c) => c.is_active).length
   const totalPoints = citizens.reduce((sum, c) => sum + (c.reputation_points || 0), 0)
@@ -56,7 +55,6 @@ export function CitizensPage() {
         </div>
       )}
 
-      {/* Metrics Row */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard icon={Users} label="Total Ciudadanos" value={totalCitizens} />
         <StatCard icon={ShieldCheck} label="Ciudadanos Activos" value={activeCitizens} />
@@ -64,7 +62,6 @@ export function CitizensPage() {
         <StatCard icon={ClipboardList} label="Reportes Enviados" value={totalReports} />
       </div>
 
-      {/* Filters Toolbar */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between bg-white dark:bg-zinc-900 p-4 rounded-lg border border-slate-200 dark:border-zinc-800">
         <div className="relative flex-1 max-w-md">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -81,7 +78,7 @@ export function CitizensPage() {
         <div className="flex gap-2 sm:w-auto">
           <SelectInput
             value={statusFilter}
-            onChange={(e: any) => setStatusFilter(e.target.value)}
+            onChange={(e) => setStatusFilter(e.target.value as 'ALL' | 'ACTIVE' | 'INACTIVE')}
             className="w-40"
           >
             <option value="ALL">Todos los Estados</option>
@@ -91,14 +88,12 @@ export function CitizensPage() {
         </div>
       </div>
 
-      {/* Table */}
       <CitizenTable
         citizens={citizens}
         onManage={(citizen) => setSelectedCitizen(citizen)}
         onToggleStatus={setPendingToggleUser}
       />
 
-      {/* Detail Modal */}
       {selectedCitizen && (
         <CitizenDetailModal
           open={true}
@@ -110,17 +105,14 @@ export function CitizensPage() {
         />
       )}
 
-      {/* Confirm Status Change */}
       <ConfirmDialog
         open={Boolean(pendingToggleUser)}
         title={pendingToggleUser?.is_active ? 'Desactivar ciudadano' : 'Activar ciudadano'}
-        message={`¿Estás seguro de que deseas ${
-          pendingToggleUser?.is_active ? 'desactivar' : 'activar'
-        } la cuenta de ${pendingToggleUser?.full_name}? ${
-          pendingToggleUser?.is_active
+        message={`¿Estás seguro de que deseas ${pendingToggleUser?.is_active ? 'desactivar' : 'activar'
+          } la cuenta de ${pendingToggleUser?.full_name}? ${pendingToggleUser?.is_active
             ? 'El ciudadano no podrá registrar reportes ni acceder a su cuenta.'
             : 'El ciudadano recuperará el acceso inmediato a la plataforma.'
-        }`}
+          }`}
         variant={pendingToggleUser?.is_active ? 'danger' : 'primary'}
         confirmLabel={pendingToggleUser?.is_active ? 'Desactivar' : 'Activar'}
         onConfirm={() => {
@@ -134,3 +126,4 @@ export function CitizensPage() {
     </div>
   )
 }
+
