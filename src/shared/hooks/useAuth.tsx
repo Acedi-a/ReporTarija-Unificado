@@ -10,7 +10,6 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   register: (fullName: string, email: string, phone: string | undefined, password: string) => Promise<void>;
   logout: () => Promise<void>;
-  loginDemo: () => Promise<void>;
   refreshUser: () => Promise<void>;
 }
 
@@ -64,11 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsDemo(false);
   }, [isDemo]);
 
-  const loginDemo = useCallback(async () => {
-    const demoUser = await authService.loginDemo();
-    setUser(demoUser);
-    setIsDemo(true);
-  }, []);
+
 
   const refreshUser = useCallback(async () => {
     if (isDemo) return;
@@ -89,7 +84,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     login,
     register,
     logout,
-    loginDemo,
     refreshUser,
   };
 

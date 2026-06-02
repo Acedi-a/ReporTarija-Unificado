@@ -30,11 +30,4 @@ describe('Prueba de Humo (Smoke Test) - Core del Sistema', () => {
     expect(instance2).toBeDefined();
     expect(instance1).toBe(instance2);
   });
-
-  it('debe responder al flujo de login demo sin crasear', async () => {
-    const user = await authService.loginDemo();
-    expect(user).toBeDefined();
-    expect(user.email).toBe('ciudadana@reportatarija.bo');
-    expect(user.role).toBe('CITIZEN');
-  });
 });

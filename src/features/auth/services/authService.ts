@@ -5,19 +5,40 @@ import type { LoginDto } from '../dtos/login.dto';
 import type { RegisterDto } from '../dtos/register.dto';
 
 
-const DEMO_USER: User = {
-  id: '7a10e1bb-4b8f-4ead-80ce-2ddd78453964',
-  full_name: 'Ciudadana Demo',
-  email: 'ciudadana@reportatarija.bo',
-  phone: '76543210',
-  role: 'CITIZEN',
-  area_id: null,
-  is_active: true,
-  reputation_points: 120,
-  created_at: '2026-01-01T00:00:00Z',
-  updated_at: '2026-01-01T00:00:00Z',
-};
 
+function translateAuthError(message: string | undefined): string {
+  if (!message) return 'Ha ocurrido un error inesperado';
+
+  const msgLower = message.toLowerCase();
+
+  if (msgLower.includes('invalid login credentials') || msgLower.includes('invalid credentials')) {
+    return 'Correo o contraseña incorrectos';
+  }
+  if (msgLower.includes('email not confirmed')) {
+    return 'El correo electrónico no ha sido verificado aún';
+  }
+  if (
+    msgLower.includes('user already registered') ||
+    msgLower.includes('already exists') ||
+    msgLower.includes('email already in use')
+  ) {
+    return 'Este correo electrónico ya está registrado';
+  }
+  if (msgLower.includes('password should be at least')) {
+    return 'La contraseña debe tener al menos 6 caracteres';
+  }
+  if (msgLower.includes('invalid email') || msgLower.includes('email format')) {
+    return 'El formato del correo electrónico es inválido';
+  }
+  if (msgLower.includes('rate limit') || msgLower.includes('too many requests')) {
+    return 'Demasiados intentos. Por favor, espera un momento y vuelve a intentarlo.';
+  }
+  if (msgLower.includes('network') || msgLower.includes('fetch')) {
+    return 'Error de conexión. Verifica tu conexión a internet.';
+  }
+
+  return message;
+}
 
 export async function login(credentials: LoginDto): Promise<User> {
   const { data: authData, error: authError } = await insforge.auth.signInWithPassword({
@@ -26,7 +47,7 @@ export async function login(credentials: LoginDto): Promise<User> {
   });
 
   if (authError) {
-    throw new Error(authError.message || 'Credenciales inválidas');
+    throw new Error(translateAuthError(authError.message));
   }
 
   if (!authData?.user) {
@@ -65,8 +86,7 @@ export async function register(userData: RegisterDto): Promise<User> {
   });
 
   if (authError) {
-    const errorMessage = authError.message || 'Error al crear la cuenta';
-    throw new Error(errorMessage);
+    throw new Error(translateAuthError(authError.message));
   }
 
   if (!authData?.user) {
@@ -137,22 +157,4 @@ export async function getCurrentUser(): Promise<User | null> {
   } catch {
     return null;
   }
-}
-
-export async function loginDemo(): Promise<User> {
-  try {
-    const { data: users } = await insforge.database
-      .from('users')
-      .select()
-      .eq('email', 'ciudadana@reportatarija.bo')
-      .limit(1);
-
-    if (users && users.length > 0) {
-      return users[0] as User;
-    }
-  } catch (error) {
-    console.error('Error al iniciar sesión en modo demo:', error);
-  }
-
-  return DEMO_USER;
 }
