@@ -17,7 +17,7 @@
 ---
 
 **Materia:** Ingeniería de Software 2 &nbsp;·&nbsp; **Tema:** Soluciones para el sector público y social  
-**Universidad:** UPDS &nbsp;·&nbsp; **Autor:** Jiménez Daniel Gustavo
+**Universidad:** UPDS &nbsp;·&nbsp; **Autor:** Daniel Gustavo Jimenez
 
 </div>
 
