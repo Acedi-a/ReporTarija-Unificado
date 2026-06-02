@@ -34,12 +34,17 @@ export function ReportDetailPage() {
 
 function ReportDetailContent({ reportDetail }: { reportDetail: LoadedReportDetail }) {
   const [actionsOpen, setActionsOpen] = useState(false)
-  const { report, statusForm, assignmentForm, evidenceUpload } = reportDetail
+  const { report, statusForm, assignmentForm, evidenceUpload, resetForm } = reportDetail
   const aiAnalysis = useReportAiAnalysis(report, reportDetail.evidences)
+
+  function handleOpenActions() {
+    resetForm()
+    setActionsOpen(true)
+  }
 
   return (
     <div className="space-y-5">
-      <ReportDetailHero report={report} onOpenActions={() => setActionsOpen(true)} />
+      <ReportDetailHero report={report} onOpenActions={handleOpenActions} />
       <ReportDetailStatsGrid report={report} />
 
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_420px]">

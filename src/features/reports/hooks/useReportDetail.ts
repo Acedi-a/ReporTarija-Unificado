@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getAreas, getStaff } from '../../staff/services/staffService'
 import { getTrackingByReportId } from '../tracking/services/trackingService'
@@ -23,6 +23,21 @@ export function useReportDetail(reportId: string) {
     queryFn: () => getReportById(reportId),
     enabled: Boolean(reportId),
   })
+
+  function resetForm() {
+    if (reportQuery.data) {
+      setNewStatus(reportQuery.data.status)
+      setAreaId(reportQuery.data.areas?.id ?? '')
+      setUserId(reportQuery.data.assigned_user?.id ?? '')
+      setComment('')
+      setStatusError('')
+      setAssignmentError('')
+    }
+  }
+
+  useEffect(() => {
+    resetForm()
+  }, [reportQuery.data])
   const evidencesQuery = useQuery({
     queryKey: ['evidences', reportId],
     queryFn: () => getEvidencesByReportId(reportId),
@@ -156,5 +171,6 @@ export function useReportDetail(reportId: string) {
       isUploading: evidenceMutation.isPending,
       upload: (file: File) => evidenceMutation.mutate(file),
     },
+    resetForm,
   }
 }

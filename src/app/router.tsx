@@ -6,6 +6,7 @@ import { DashboardPage } from '../features/dashboard/pages/DashboardPage'
 import { ReportsPage } from '../features/reports/pages/ReportsPage'
 import { ReportDetailPage } from '../features/reports/pages/ReportDetailPage'
 import { StaffPage } from '../features/staff/pages/StaffPage'
+import { CitizensPage } from '../features/citizens/pages/CitizensPage'
 import { NotificationsPage } from '../features/notifications/pages/NotificationsPage'
 import { HelpPage } from '../shared/pages/HelpPage'
 import { NotFoundPage } from '../shared/pages/NotFoundPage'
@@ -23,6 +24,7 @@ export const router = createBrowserRouter([
           { path: 'dashboard', element: <DashboardPage /> },
           { path: 'reports', element: <ReportsPage /> },
           { path: 'reports/:id', element: <ReportDetailPage /> },
+          { path: 'citizens', element: <CitizensPage /> },
           { path: 'staff', element: <StaffPage /> },
           { path: 'notifications', element: <NotificationsPage /> },
           { path: 'help', element: <HelpPage /> },
@@ -33,3 +35,4 @@ export const router = createBrowserRouter([
   },
   { path: '*', element: <Navigate to="/dashboard" replace /> },
 ])
+

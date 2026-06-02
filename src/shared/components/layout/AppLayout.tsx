@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { Bell, ClipboardList, LayoutDashboard, LogOut, Moon, Sun, Users, HelpCircle } from 'lucide-react'
+import { Bell, ClipboardList, LayoutDashboard, LogOut, Moon, Sun, Users, HelpCircle, Award } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { useTheme } from '../../../app/theme'
 import { Logo } from '../ui/Logo'
@@ -10,10 +10,12 @@ import { getUnreadNotificationsCount } from '../../../features/notifications/ser
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/reports', label: 'Reportes', icon: ClipboardList },
+  { to: '/citizens', label: 'Ciudadanos', icon: Award },
   { to: '/staff', label: 'Accesos', icon: Users },
   { to: '/notifications', label: 'Notificaciones', icon: Bell },
   { to: '/help', label: 'Ayuda', icon: HelpCircle },
 ]
+
 
 
 export function AppLayout() {
