@@ -23,7 +23,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
       const unread = data.filter((n) => !n.is_read).length;
       setUnreadCount(unread);
     } catch (error) {
-      console.error('Error al actualizar contador de notificaciones:', error);
+      console.warn('Error al actualizar contador de notificaciones:', error);
     }
   }, [user?.id]);
 

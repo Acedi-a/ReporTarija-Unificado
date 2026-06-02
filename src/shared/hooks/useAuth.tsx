@@ -11,6 +11,7 @@ interface AuthContextType {
   register: (fullName: string, email: string, phone: string | undefined, password: string) => Promise<void>;
   logout: () => Promise<void>;
   loginDemo: () => Promise<void>;
+  refreshUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -69,6 +70,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsDemo(true);
   }, []);
 
+  const refreshUser = useCallback(async () => {
+    if (isDemo) return;
+    try {
+      const currentUser = await authService.getCurrentUser();
+      if (currentUser) {
+        setUser(currentUser);
+      }
+    } catch (error) {
+      console.warn('Error al actualizar datos de usuario:', error);
+    }
+  }, [isDemo]);
+
   const value: AuthContextType = {
     user,
     isLoading,
@@ -77,6 +90,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     register,
     logout,
     loginDemo,
+    refreshUser,
   };
 
   return (

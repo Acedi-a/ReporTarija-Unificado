@@ -28,7 +28,7 @@ export function useReportDetail(id?: string) {
       setTracking(trackingData);
       setEvidences(evidenceData);
     } catch (err: any) {
-      console.error('Error al cargar detalle de reporte:', err);
+      console.warn('Error al cargar detalle de reporte:', err);
       setError('No se pudieron obtener los datos de este reporte.');
     } finally {
       setLoading(false);

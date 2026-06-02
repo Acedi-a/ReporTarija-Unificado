@@ -10,6 +10,7 @@ export async function getMyNotifications(userId: string): Promise<Notification[]
     .order('created_at', { ascending: false });
 
   if (error) {
+    console.warn('Detalle del error en getMyNotifications:', error);
     throw new Error('Error al obtener tus notificaciones');
   }
 

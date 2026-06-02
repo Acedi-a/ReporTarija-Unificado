@@ -31,7 +31,7 @@ export function useHomeData(userId: string | undefined) {
       setRecentReports(reportsData);
       setStats(statsData);
     } catch (error) {
-      console.error('Error al cargar datos del home:', error);
+      console.warn('Error al cargar datos del home:', error);
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);

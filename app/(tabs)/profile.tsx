@@ -4,18 +4,34 @@ import { getUserRank } from '@/src/shared/constants/reputation';
 import { BorderRadius, Colors, FontSize, FontWeight, Shadows, Spacing } from '@/src/shared/constants/theme';
 import { useAuth } from '@/src/shared/hooks/useAuth';
 import { Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, RefreshControl } from 'react-native';
 
 export default function ProfileScreen() {
-  const { user, isDemo, logout } = useAuth();
+  const { user, isDemo, logout, refreshUser } = useAuth();
   const [showHelp, setShowHelp] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const points = user?.reputation_points || 0;
   const rank = getUserRank(points);
 
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await refreshUser();
+    setRefreshing(false);
+  }, [refreshUser]);
+
   return (
-    <ScreenContainer>
+    <ScreenContainer
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          colors={[Colors.primary]}
+          tintColor={Colors.primary}
+        />
+      }
+    >
       <Text style={styles.screenTitle}>Mi Perfil</Text>
 
       <View style={styles.profileCard}>

@@ -23,7 +23,7 @@ export function useNotificationsList() {
       setNotifications(data);
       refreshUnreadCount();
     } catch (error) {
-      console.error('Error al cargar notificaciones:', error);
+      console.warn('Error al cargar notificaciones:', error);
     } finally {
       setLoading(false);
       setRefreshing(false);

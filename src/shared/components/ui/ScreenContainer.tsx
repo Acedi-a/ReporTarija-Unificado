@@ -7,6 +7,7 @@ import {
   StyleSheet,
   View,
   type ViewStyle,
+  type RefreshControlProps,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors, Spacing } from '../../constants/theme';
@@ -18,6 +19,7 @@ interface ScreenContainerProps {
   contentStyle?: ViewStyle;
   padded?: boolean;
   backgroundColor?: string;
+  refreshControl?: React.ReactElement<RefreshControlProps>;
 }
 
 export function ScreenContainer({
@@ -27,6 +29,7 @@ export function ScreenContainer({
   contentStyle,
   padded = true,
   backgroundColor = Colors.background,
+  refreshControl,
 }: ScreenContainerProps) {
   const insets = useSafeAreaInsets();
 
@@ -50,6 +53,7 @@ export function ScreenContainer({
       contentContainerStyle={styles.scrollContent}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
+      refreshControl={refreshControl}
     >
       {children}
     </ScrollView>

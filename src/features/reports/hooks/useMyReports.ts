@@ -28,7 +28,7 @@ export function useMyReports() {
       const data = await getMyReports(user.id);
       setReports(data);
     } catch (error) {
-      console.error('Error al cargar reportes:', error);
+      console.warn('Error al cargar reportes:', error);
     } finally {
       setLoading(false);
       setRefreshing(false);
