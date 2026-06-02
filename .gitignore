@@ -30,3 +30,4 @@ AGENTS.md
 skills-lock.json
 test_results
 test-results/
+coverage/

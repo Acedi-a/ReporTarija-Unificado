@@ -29,12 +29,12 @@ export function useReportsPageData(filters: ReportFiltersState) {
   const reports = reportsQuery.data ?? emptyReports
   const evidences = evidencesQuery.data ?? emptyEvidences
   const reportsVisibleOnMap = useMemo(
-    () => reports.filter((report) => report.status !== 'RESUELTO'),
+    () => reports,
     [reports],
   )
   const mapData = useReportMapData(reportsVisibleOnMap, evidences)
   const selectedReport = reports.find((report) => report.id === selectedReportId) ?? null
-  const selectedReportOnMap = selectedReport?.status === 'RESUELTO' ? null : selectedReport
+  const selectedReportOnMap = selectedReport
 
   function selectReport(report: Report) {
     setSelectedReportId(report.id)

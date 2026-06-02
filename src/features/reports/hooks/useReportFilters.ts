@@ -13,7 +13,7 @@ export type ReportFiltersState = {
 
 const initialFilters: ReportFiltersState = {
   search: '',
-  status: '',
+  status: 'PENDIENTE,EN_REVISION,ASIGNADO,EN_PROCESO',
   category: '',
   priority: '',
   area: '',

@@ -14,7 +14,6 @@ test('prueba de humo del portal municipal', async ({ page }) => {
   await expect(page.getByLabel('Correo')).toBeVisible()
   await expect(page.getByLabel('Contraseña')).toBeVisible()
   await expect(page.getByRole('button', { name: 'Iniciar sesión' })).toBeVisible()
-  await expect(page.getByRole('button', { name: 'Entrar al prototipo demo' })).toBeVisible()
 
   await page.getByLabel('Correo').fill(adminEmail)
   await page.getByLabel('Contraseña').fill(adminPassword)
@@ -25,6 +24,7 @@ test('prueba de humo del portal municipal', async ({ page }) => {
   await expect(page.getByText('Panel ReportaTarija').first()).toBeVisible()
   await expect(page.getByRole('link', { name: /Dashboard/ })).toBeVisible()
   await expect(page.getByRole('link', { name: /Reportes/ })).toBeVisible()
+  await expect(page.getByRole('link', { name: /Ciudadanos/ })).toBeVisible()
   await expect(page.getByRole('link', { name: /Accesos/ })).toBeVisible()
   await expect(page.getByRole('link', { name: /Notificaciones/ })).toBeVisible()
 
@@ -36,6 +36,11 @@ test('prueba de humo del portal municipal', async ({ page }) => {
   await expect(page.getByRole('button', { name: /Mapa/ })).toBeVisible()
   await expect(page.getByRole('button', { name: /Kanban/ })).toBeVisible()
   await expect(page.getByRole('button', { name: /Exportar CSV/ })).toBeVisible()
+
+  await page.getByRole('link', { name: /Ciudadanos/ }).click()
+  await expect(page).toHaveURL(/\/citizens/)
+  await expect(page.getByRole('heading', { name: 'Ciudadanos de Tarija' })).toBeVisible()
+  await expect(page.getByPlaceholder('Buscar por nombre, correo o teléfono...')).toBeVisible()
 
   await page.getByRole('link', { name: /Accesos/ }).click()
   await expect(page).toHaveURL(/\/staff/)

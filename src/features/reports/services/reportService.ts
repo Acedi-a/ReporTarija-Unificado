@@ -114,13 +114,21 @@ function applyReportFilters<Query>(query: Query, filters: ReportFilters) {
     eq: (column: string, value: string) => typeof filteredQuery
     gte: (column: string, value: string) => typeof filteredQuery
     lte: (column: string, value: string) => typeof filteredQuery
+    in: (column: string, values: string[]) => typeof filteredQuery
   }
 
   reportFilterColumns.forEach(([filterKey, column]) => {
     const value = filters[filterKey]
 
     if (value) {
-      filteredQuery = filteredQuery.eq(column, value)
+      if (filterKey === 'status') {
+        const statuses = value.split(',').filter(Boolean)
+        if (statuses.length > 0) {
+          filteredQuery = filteredQuery.in(column, statuses)
+        }
+      } else {
+        filteredQuery = filteredQuery.eq(column, value)
+      }
     }
   })
 
