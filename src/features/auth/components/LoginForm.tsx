@@ -14,13 +14,11 @@ import { Colors, FontSize, FontWeight, Spacing } from '../../../shared/constants
 
 interface LoginFormProps {
   onSubmit: (data: LoginFormData) => Promise<void>;
-  onDemoAccess: () => Promise<void>;
   onGoToRegister: () => void;
 }
 
-export function LoginForm({ onSubmit, onDemoAccess, onGoToRegister }: LoginFormProps) {
+export function LoginForm({ onSubmit, onGoToRegister }: LoginFormProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [isDemoLoading, setIsDemoLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const {
@@ -45,19 +43,6 @@ export function LoginForm({ onSubmit, onDemoAccess, onGoToRegister }: LoginFormP
       setErrorMessage(message);
     } finally {
       setIsLoading(false);
-    }
-  }
-
-  async function handleDemoAccess() {
-    setIsDemoLoading(true);
-    setErrorMessage(null);
-    try {
-      await onDemoAccess();
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Error al acceder en modo demo';
-      setErrorMessage(message);
-    } finally {
-      setIsDemoLoading(false);
     }
   }
 
@@ -110,22 +95,7 @@ export function LoginForm({ onSubmit, onDemoAccess, onGoToRegister }: LoginFormP
         title="Iniciar sesión"
         onPress={handleSubmit(handleLogin)}
         loading={isLoading}
-        disabled={isDemoLoading}
         style={styles.loginButton}
-      />
-
-      <View style={styles.divider}>
-        <View style={styles.dividerLine} />
-        <Text style={styles.dividerText}>o</Text>
-        <View style={styles.dividerLine} />
-      </View>
-
-      <Button
-        title="Acceso Demo"
-        onPress={handleDemoAccess}
-        variant="outline"
-        loading={isDemoLoading}
-        disabled={isLoading}
       />
 
       <TouchableOpacity onPress={onGoToRegister} style={styles.registerLink}>

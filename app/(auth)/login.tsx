@@ -14,14 +14,10 @@ import type { LoginFormData } from '@/src/lib/validations';
 
 export default function LoginScreen() {
   const router = useRouter();
-  const { login, loginDemo } = useAuth();
+  const { login } = useAuth();
 
   async function handleLogin(data: LoginFormData) {
     await login(data.email, data.password);
-  }
-
-  async function handleDemoAccess() {
-    await loginDemo();
   }
 
   function handleGoToRegister() {
@@ -46,7 +42,6 @@ export default function LoginScreen() {
         {/* Formulario */}
         <LoginForm
           onSubmit={handleLogin}
-          onDemoAccess={handleDemoAccess}
           onGoToRegister={handleGoToRegister}
         />
       </View>
